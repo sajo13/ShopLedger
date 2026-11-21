@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"
+     role="img" aria-labelledby="title description">
+  <title id="title">ShopLedger architecture and order flow</title>
+  <desc id="description">The browser calls Express, which mounts four API routers. The module map lists the ten library files, shared configuration, and JSON data store. A numbered sequence follows order placement from the browser to disk and back. The purple invoice module recalculates figures when an invoice is opened.</desc>
+  <defs>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; fill: #172740; font-size: 14px; }
+      .title { font-size: 32px; font-weight: 700; }
+      .section { font-size: 17px; font-weight: 700; }
+      .name { font-size: 15px; font-weight: 700; }
+      .router-name { font-size: 14px; font-weight: 700; }
+      .detail { font-size: 13px; fill: #3e5068; }
+      .code { font-family: Consolas, "Courier New", monospace; font-size: 13px; }
+      .card { fill: #fff; stroke: #b8c8d9; }
+      .entry { fill: #eaf3ff; stroke: #9dbbe0; }
+      .ticket { fill: #f3e9ff; stroke: #9a68c8; }
+      .ticket-text { fill: #57278b; }
+      .link { fill: none; stroke: #5a7594; stroke-width: 1.5; }
+      .step { fill: #1b5ca8; }
+      .number { fill: #fff; font-size: 13px; font-weight: 700; text-anchor: middle; }
+      .rule { stroke: #cbd8e6; }
+    </style>
+    <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 0L8 4L0 8Z" fill="#5a7594"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="800" fill="#f6f9fc"/>
+  <text x="36" y="53" class="title">ShopLedger architecture</text>
+  <text x="37" y="79" class="detail">Point of sale, inventory, Khata credit and printable GST invoices</text>
+  <line x1="36" y1="94" x2="1164" y2="94" class="rule"/>
+
+  <g aria-label="Browser and server">
+    <rect x="36" y="113" width="280" height="76" rx="9" class="entry"/>
+    <text x="50" y="137" class="name">public/ · Browser UI</text>
+    <text x="50" y="157" class="detail">POS, order register, Khata and audit</text>
+    <text x="50" y="176" class="code">public/js/app.js</text>
+    <path d="M316 151H359" class="link" marker-end="url(#arrow)"/>
+    <rect x="360" y="113" width="380" height="76" rx="9" class="entry"/>
+    <text x="374" y="137" class="name">server.js · Express</text>
+    <text x="374" y="157" class="detail">Serves public/, parses JSON and mounts /api routers</text>
+    <text x="374" y="176" class="code">GET /orders/:id/invoice</text>
+  </g>
+
+  <g aria-label="API routers">
+    <text x="36" y="221" class="section">API routers</text>
+    <path d="M550 189V231 M119 231H656 M119 231V243 M298 231V243 M477 231V243 M656 231V243"
+          class="link"/>
+
+    <rect x="36" y="243" width="166" height="64" rx="7" class="card"/>
+    <text x="47" y="266" class="router-name">routes/products.js</text>
+    <text x="47" y="286" class="detail">Catalog and coupons</text>
+
+    <rect x="215" y="243" width="166" height="64" rx="7" class="entry"/>
+    <text x="226" y="266" class="router-name">routes/orders.js</text>
+    <text x="226" y="286" class="detail">Place, list, view, cancel</text>
+
+    <rect x="394" y="243" width="166" height="64" rx="7" class="card"/>
+    <text x="405" y="266" class="router-name">routes/customers.js</text>
+    <text x="405" y="286" class="detail">Customers, settlements</text>
+
+    <rect x="573" y="243" width="167" height="64" rx="7" class="card"/>
+    <text x="584" y="266" class="router-name">routes/reports.js</text>
+    <text x="584" y="284" class="detail">Dashboard, GST audit,</text>
+    <text x="584" y="300" class="detail">cart preview, export</text>
+  </g>
+
+  <g aria-label="Library modules">
+    <text x="36" y="337" class="section">Application modules</text>
+
+    <rect x="36" y="350" width="224" height="65" rx="7" class="card"/>
+    <text x="48" y="373" class="name">lib/inventory.js</text>
+    <text x="48" y="394" class="detail">Sellable stock and deductions</text>
+
+    <rect x="276" y="350" width="224" height="65" rx="7" class="card"/>
+    <text x="288" y="373" class="name">lib/pricing.js</text>
+    <text x="288" y="393" class="detail">Checkout and preview totals</text>
+    <text x="288" y="408" class="detail">Uses coupons.js and tax.js</text>
+
+    <rect x="516" y="350" width="224" height="65" rx="7" class="card"/>
+    <text x="528" y="373" class="name">lib/coupons.js</text>
+    <text x="528" y="394" class="detail">Coupon eligibility and discounts</text>
+
+    <rect x="36" y="425" width="224" height="65" rx="7" class="card"/>
+    <text x="48" y="448" class="name">lib/orders.js</text>
+    <text x="48" y="469" class="detail">Save, find and cancel orders</text>
+
+    <rect x="276" y="425" width="224" height="65" rx="7" class="card"/>
+    <text x="288" y="448" class="name">lib/ledger.js</text>
+    <text x="288" y="469" class="detail">Khata balances and settlements</text>
+
+    <rect x="516" y="425" width="224" height="65" rx="7" class="card"/>
+    <text x="528" y="448" class="name">lib/tax.js</text>
+    <text x="528" y="469" class="detail">HSN rates and CGST/SGST split</text>
+
+    <rect x="36" y="500" width="224" height="70" rx="7" class="card"/>
+    <text x="48" y="523" class="name">lib/dates.js</text>
+    <text x="48" y="544" class="detail">Date formatting and fiscal year</text>
+
+    <rect x="276" y="500" width="224" height="70" rx="7" class="card"/>
+    <text x="288" y="523" class="name">lib/reports.js</text>
+    <text x="288" y="543" class="detail">Dashboard, GST reconciliation</text>
+    <text x="288" y="559" class="detail">Checks saved vs. invoice totals</text>
+
+    <rect x="516" y="500" width="224" height="70" rx="7" class="ticket"/>
+    <text x="528" y="523" class="name ticket-text">lib/invoice.js</text>
+    <text x="528" y="543" class="detail ticket-text">Recomputes GST and discounts</text>
+    <text x="528" y="559" class="detail ticket-text">Renders printable invoice HTML</text>
+  </g>
+
+  <g aria-label="Storage and configuration">
+    <text x="36" y="606" class="section">Storage and configuration</text>
+    <rect x="36" y="619" width="224" height="91" rx="7" class="card"/>
+    <text x="48" y="643" class="name">lib/store.js</text>
+    <text x="48" y="664" class="code">read() / write()</text>
+    <text x="48" y="685" class="detail">Synchronous whole-file JSON I/O</text>
+    <path d="M260 664H275" class="link" marker-end="url(#arrow)"/>
+
+    <rect x="276" y="619" width="224" height="91" rx="7" class="card"/>
+    <text x="288" y="643" class="name">data/db.json</text>
+    <text x="288" y="664" class="detail">Products, customers, orders,</text>
+    <text x="288" y="681" class="detail">settlements, audit log and IDs</text>
+
+    <rect x="516" y="619" width="224" height="91" rx="7" class="card"/>
+    <text x="528" y="643" class="name">config.js</text>
+    <text x="528" y="664" class="detail">Shop, port, GST and coupons,</text>
+    <text x="528" y="681" class="detail">inventory defaults, export key</text>
+  </g>
+
+  <g aria-label="Placing an order in seven steps">
+    <rect x="766" y="113" width="398" height="625" rx="12" fill="#edf4fb" stroke="#c1d2e5"/>
+    <text x="786" y="142" class="section">Placing an order</text>
+    <path d="M797 173V655" stroke="#9eb9d9" stroke-width="2"/>
+
+    <circle cx="797" cy="173" r="12" class="step"/>
+    <text x="797" y="178" class="number">1</text>
+    <text x="821" y="178" class="name">Submit the cart</text>
+    <text x="821" y="198" class="code">getSelectedCartItems() → post()</text>
+    <text x="821" y="216" class="detail">POST /api/orders via server.js to routes/orders.js</text>
+
+    <circle cx="797" cy="248" r="12" class="step"/>
+    <text x="797" y="253" class="number">2</text>
+    <text x="821" y="253" class="name">Load and check the items</text>
+    <text x="821" y="273" class="code">store.read() → inventory.find()</text>
+    <text x="821" y="291" class="detail">Copy prices and HSN, then call inventory.check().</text>
+
+    <circle cx="797" cy="323" r="12" class="step"/>
+    <text x="797" y="328" class="number">3</text>
+    <text x="821" y="328" class="name">Validate coupon and calculate totals</text>
+    <text x="821" y="348" class="code">pricing.subtotal() → coupons.normalizeCode()</text>
+    <text x="821" y="366" class="code">coupons.validate() → pricing.computeTotals()</text>
+    <text x="821" y="384" class="detail">Tax each discounted line at its HSN rate or fallback.</text>
+
+    <circle cx="797" cy="417" r="12" class="step"/>
+    <text x="797" y="422" class="number">4</text>
+    <text x="821" y="422" class="name">Charge Khata if selected</text>
+    <text x="821" y="442" class="code">ledger.chargeOrderToKhata()</text>
+    <text x="821" y="460" class="detail">Check the credit limit and update the balance.</text>
+
+    <circle cx="797" cy="492" r="12" class="step"/>
+    <text x="797" y="497" class="number">5</text>
+    <text x="821" y="497" class="name">Deduct stock and record the order</text>
+    <text x="821" y="517" class="code">inventory.reserve() → orders.add()</text>
+    <text x="821" y="535" class="detail">Assign the next ID and save item snapshots and totals.</text>
+
+    <circle cx="797" cy="567" r="12" class="step"/>
+    <text x="797" y="572" class="number">6</text>
+    <text x="821" y="572" class="name">Write data/db.json</text>
+    <text x="821" y="592" class="code">store.appendAudit() → store.write()</text>
+    <text x="821" y="610" class="detail">Save order, stock, audit entry and any Khata change.</text>
+
+    <circle cx="797" cy="643" r="12" class="step"/>
+    <text x="797" y="648" class="number">7</text>
+    <text x="821" y="648" class="name">Return the saved order</text>
+    <text x="821" y="668" class="detail">HTTP 201 with JSON. The UI shows an invoice link.</text>
+    <text x="821" y="690" class="detail ticket-text">Opening the link calls invoice.render() separately.</text>
+  </g>
+
+  <g aria-label="Legend">
+    <line x1="36" y1="751" x2="1164" y2="751" class="rule"/>
+    <text x="36" y="778" class="name">Legend</text>
+    <circle cx="117" cy="773" r="10" class="step"/>
+    <text x="117" y="778" class="number">1</text>
+    <text x="133" y="778" class="detail">Order flow step</text>
+    <rect x="259" y="765" width="17" height="15" rx="3" class="ticket"/>
+    <text x="285" y="778" class="detail">Ticket module</text>
+  </g>
+</svg>
